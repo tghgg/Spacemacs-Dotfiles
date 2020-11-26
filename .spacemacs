@@ -333,7 +333,7 @@ you should place your code here."
   (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
 
   ;; Word wrap
-  (set-default 'truncate-lines t)
+  (setq-default truncate-lines nil)
   (setq-default word-wrap t)
 
   ;; Don't show inline images
