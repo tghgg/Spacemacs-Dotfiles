@@ -334,6 +334,7 @@ you should place your code here."
 
   ;; Word wrap
   (setq-default truncate-lines nil)
+  (setq-default org-startup-truncated nil)
   (setq-default word-wrap t)
 
   ;; Don't show inline images
