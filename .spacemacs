@@ -323,10 +323,6 @@ you should place your code here."
   (require 'org-download)
   (add-hook 'dired-mode-hook 'org-download-enable)
 
-  ;; Use for screenshots
-  ;; (add-to-list 'load-path "~/Emacs-Org-Mode/org-attach-screenshot.el")
-  ;; (require 'org-attach-screenshot)
-
   ;; Automatically open Org-Mode when opening .org files
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
@@ -339,6 +335,9 @@ you should place your code here."
   ;; Word wrap
   (set-default 'truncate-lines t)
   (setq-default word-wrap t)
+
+  ;; Don't show inline images
+  (setq org-startup-with-inline-images nil)
 
   ;; Use ranger instead of dired
   (setq-default dotspacemacs-configuration-layers
