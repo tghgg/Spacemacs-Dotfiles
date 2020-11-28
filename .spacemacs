@@ -329,8 +329,9 @@ you should place your code here."
 
   ;; Add vertical lines
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+
   ;; Disable truncate lines when programming
-  ;: TODO
+  (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
   ;; Fix the annoying yasnippet warning
   (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
@@ -352,6 +353,7 @@ you should place your code here."
   ;; Autosave
   (super-save-mode +1)
   (setq auto-save-default nil)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -401,7 +403,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files
    '("~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/UntitledTextOnlyGame.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
  '(package-selected-packages
-   '(spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(pianobar spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
