@@ -333,6 +333,9 @@ you should place your code here."
   ;; Disable truncate lines when programming
   (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
+  ;; Show line numbers when programming
+  (add-hook 'prog-mode-hook 'spacemacs/toggle-absolute-line-numbers)
+
   ;; Fix the annoying yasnippet warning
   (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
 
