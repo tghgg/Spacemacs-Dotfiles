@@ -327,6 +327,9 @@ you should place your code here."
   ;; Automatically open Org-Mode when opening .org files
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
+  ;; The agenda view always start from the current day
+  (setq-default org-agenda-start-on-weekday nil)
+
   ;; Add vertical lines
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
