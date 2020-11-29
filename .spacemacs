@@ -57,6 +57,7 @@ values."
    dotspacemacs-additional-packages '( atom-one-dark-theme
                                        highlight-indent-guides
                                        yasnippet
+                                       olivetti
                                        magit
                                        super-save
                                        )
@@ -326,6 +327,9 @@ you should place your code here."
 
   ;; Automatically open Org-Mode when opening .org files
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+
+  ;; Open Olivetti mode on opening an Org file
+  (add-hook 'org-mode-hook 'olivetti-mode)
 
   ;; The agenda view always start from the current day
   (setq-default org-agenda-start-on-weekday nil)
