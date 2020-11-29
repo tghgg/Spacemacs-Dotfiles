@@ -323,7 +323,10 @@ you should place your code here."
   ;; Drag-and-Drop images with org-download
   (require 'org-download)
   (add-hook 'dired-mode-hook 'org-download-enable)
+
+  ;; Store org-download images correctly in an dedicated ~images~ folder
   (setq-default org-download-heading-lvl nil)
+  (setq-default org-download-image-dir "./images/")
 
   ;; Automatically open Org-Mode when opening .org files
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
