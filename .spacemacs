@@ -334,6 +334,9 @@ you should place your code here."
   ;; The agenda view always start from the current day
   (setq-default org-agenda-start-on-weekday nil)
 
+  ;; The agenda view spans a week from now including the current day
+  (setq-default org-agenda-span 8)
+
   ;; Add vertical lines
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
