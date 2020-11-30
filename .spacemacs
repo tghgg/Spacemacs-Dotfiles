@@ -331,6 +331,9 @@ you should place your code here."
   ;; Automatically open Org-Mode when opening .org files
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
+  ;; Use Olivetti mode for Yarn Spinner dialogue files
+  (add-to-list 'auto-mode-alist '("\\.yarn\\'" . olivetti-mode))
+
   ;; Open Olivetti mode on opening an Org file
   (add-hook 'org-mode-hook 'olivetti-mode)
 
