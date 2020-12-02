@@ -57,6 +57,7 @@ values."
    dotspacemacs-additional-packages '( atom-one-dark-theme
                                        highlight-indent-guides
                                        yasnippet
+                                       org-download
                                        olivetti
                                        magit
                                        super-save
@@ -327,7 +328,6 @@ you should place your code here."
 
   ;; Use org-download
   ;; Drag-and-Drop images with org-download
-  (require 'org-download)
   (add-hook 'dired-mode-hook 'org-download-enable)
 
   ;; Store org-download images correctly in an dedicated ~images~ folder
