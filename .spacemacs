@@ -319,6 +319,12 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; Increases Garbage Collection During Startup
+  (setq startup/gc-cons-threshold gc-cons-threshold)
+  (setq gc-cons-threshold most-positive-fixnum)
+  (defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
+  (add-hook 'emacs-startup-hook 'startup/reset-gc)
+
   ;; Use org-download
   ;; Drag-and-Drop images with org-download
   (require 'org-download)
