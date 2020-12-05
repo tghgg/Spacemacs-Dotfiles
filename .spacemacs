@@ -60,7 +60,6 @@ values."
                                        yasnippet
                                        org-download
                                        olivetti
-                                       magit
                                        super-save
                                        )
    ;; A list of packages that cannot be updated.
@@ -138,7 +137,6 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         atom-one-dark
                          spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
@@ -146,7 +144,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("JetBrains Mono"
-                               :size 16
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1)
@@ -230,7 +228,7 @@ values."
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar t
+   dotspacemacs-loading-progress-bar nil
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
    dotspacemacs-fullscreen-at-startup nil
@@ -329,7 +327,6 @@ you should place your code here."
   (defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
   (add-hook 'emacs-startup-hook 'startup/reset-gc)
 
-  ;; Use org-download
   ;; Drag-and-Drop images with org-download
   (add-hook 'dired-mode-hook 'org-download-enable)
 
@@ -340,8 +337,14 @@ you should place your code here."
   ;; Automatically open Org-Mode when opening .org files
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
+  ;; Add all the files to the agenda list automatically
+  (setq-default org-agenda-files "~/Emacs-Org-Mode")
+
   ;; Use Olivetti mode for Yarn Spinner dialogue files
   (add-to-list 'auto-mode-alist '("\\.yarn\\'" . olivetti-mode))
+
+  ;; Set the body width in Olivetti mode
+  (setq-default olivetti-body-width 100)
 
   ;; Open Olivetti mode on opening an Org file
   (add-hook 'org-mode-hook 'olivetti-mode)
@@ -354,7 +357,6 @@ you should place your code here."
 
   ;; Deadlines only become active on the day before the deadline to avoid cluttering the agenda
   (setq-default org-deadline-warning-days 1)
-
 
   ;; Add vertical lines
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
