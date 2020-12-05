@@ -338,7 +338,7 @@ you should place your code here."
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
   ;; Add all the files to the agenda list automatically
-  (setq-default org-agenda-files "~/Emacs-Org-Mode")
+  (setq-default org-agenda-files '("~/Emacs-Org-Mode"))
 
   ;; Use Olivetti mode for Yarn Spinner dialogue files
   (add-to-list 'auto-mode-alist '("\\.yarn\\'" . olivetti-mode))
