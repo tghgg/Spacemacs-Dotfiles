@@ -34,7 +34,8 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
+     ;;helm
+     ivy
      auto-completion
      ;; better-defaults
      emacs-lisp
@@ -54,7 +55,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '( atom-one-dark-theme
+   dotspacemacs-additional-packages '(
                                        highlight-indent-guides
                                        yasnippet
                                        org-download
@@ -130,13 +131,15 @@ values."
    dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 7))
    ;; True if the home buffer should respond to resize events.
-   dotspacemacs-startup-buffer-responsive t
+   ;; dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '( spacemacs-dark
+   dotspacemacs-themes '(
+                         atom-one-dark
+                         spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -237,7 +240,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -349,6 +352,10 @@ you should place your code here."
   ;; The agenda view spans a week from now including the current day
   (setq-default org-agenda-span 8)
 
+  ;; Deadlines only become active on the day before the deadline to avoid cluttering the agenda
+  (setq-default org-deadline-warning-days 1)
+
+
   ;; Add vertical lines
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
@@ -357,9 +364,6 @@ you should place your code here."
 
   ;; Show line numbers when programming
   (add-hook 'prog-mode-hook 'spacemacs/toggle-absolute-line-numbers)
-
-  ;; Fix the annoying yasnippet warning
-  (defvaralias 'helm-c-yas-space-match-any-greedy 'helm-yas-space-match-any-greedy "Temporary alias for Emacs27")
 
   ;; Word wrap and truncate lines
   (setq-default truncate-lines nil)
@@ -375,10 +379,10 @@ you should place your code here."
                          ranger-override-dired 'ranger
                          ranger-show-preview t))
 
-  ;; Autosave
-  (super-save-mode +1)
-  (setq auto-save-default nil)
-
+  ;; Disable file-watch for lsp-mode
+  (setq lsp-enable-file-watchers nil)
+  ;; Disable lsp-mode logging
+  (setq lsp-log-io nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
