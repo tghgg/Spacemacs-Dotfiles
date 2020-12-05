@@ -383,6 +383,10 @@ you should place your code here."
   (setq lsp-enable-file-watchers nil)
   ;; Disable lsp-mode logging
   (setq lsp-log-io nil)
+
+  ;; Autosave
+  (super-save-mode +1)
+  (setq auto-save-default nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
