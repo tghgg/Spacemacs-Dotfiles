@@ -334,7 +334,7 @@ you should place your code here."
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
   ;; Add all the files to the agenda list automatically
-  (setq-default org-agenda-files '("~/Emacs-Org-Mode"))
+  ;; (setq-default org-agenda-files '("~/Emacs-Org-Mode"))
 
   ;; Use Olivetti mode for Yarn Spinner dialogue files
   (add-to-list 'auto-mode-alist '("\\.yarn\\'" . olivetti-mode))
@@ -351,6 +351,7 @@ you should place your code here."
   ;; Deadlines only become active on the day before the deadline to avoid cluttering the agenda
   (setq-default org-deadline-warning-days 1)
 
+  ;; Optimize font-fock-fontify
   (setq font-lock-maximum-decoration 2)
 
   ;; Disable truncate lines when programming
@@ -460,9 +461,9 @@ This function is called at the very end of Spacemacs initialization."
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f")))
  '(org-agenda-files
-   '("~/Emacs-Org-Mode/Journal/6-12-2020.org" "~/Emacs-Org-Mode/Journal/1-12-2020.org" "~/Emacs-Org-Mode/Journal/4-12-2020.org" "~/Emacs-Org-Mode/Journal/3-12-2020.org" "~/Emacs-Org-Mode/Journal/25-11-2020.org" "~/Emacs-Org-Mode/Journal/5-12-2020.org" "~/Emacs-Org-Mode/Todo/AWoO.org" "~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
+   '("~/org/notes.org" "~/Emacs-Org-Mode/Journal/6-12-2020.org" "~/Emacs-Org-Mode/Journal/1-12-2020.org" "~/Emacs-Org-Mode/Journal/4-12-2020.org" "~/Emacs-Org-Mode/Journal/3-12-2020.org" "~/Emacs-Org-Mode/Journal/25-11-2020.org" "~/Emacs-Org-Mode/Journal/5-12-2020.org" "~/Emacs-Org-Mode/Todo/AWoO.org" "~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
  '(package-selected-packages
-   '(vscode-dark-plus-theme spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(flyspell-correct-ivy flyspell-correct auto-dictionary spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(tetris-x-colors
    [[229 192 123]
