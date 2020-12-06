@@ -137,7 +137,9 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         atom-one-dark
                          spacemacs-dark
+                         vs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -321,12 +323,6 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; Increases Garbage Collection During Startup
-  ;; (setq startup/gc-cons-threshold gc-cons-threshold)
-  ;; (defun startup/reset-gc () (setq gc-cons-threshold startup/gc-cons-threshold))
-  ;; (add-hook 'emacs-startup-hook 'startup/reset-gc)
-
-  ;; Use org-download
   ;; Drag-and-Drop images with org-download
   (add-hook 'dired-mode-hook 'org-download-enable)
 
@@ -346,8 +342,6 @@ you should place your code here."
   ;; Open Olivetti mode on opening an Org file
   (add-hook 'org-mode-hook 'olivetti-mode)
 
-  (setq flycheck-check-syntax-automatically '(save-mode-enable))
-
   ;; The agenda view always start from the current day
   (setq-default org-agenda-start-on-weekday nil)
 
@@ -356,9 +350,6 @@ you should place your code here."
 
   ;; Deadlines only become active on the day before the deadline to avoid cluttering the agenda
   (setq-default org-deadline-warning-days 1)
-
-  ;; Add vertical lines
-  ;; (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
   (setq font-lock-maximum-decoration 2)
 
@@ -390,6 +381,36 @@ you should place your code here."
   ;; Autosave
   (super-save-mode +1)
   (setq auto-save-default nil)
+
+  ;; Configure Omnisharp and lsp-mode to work together nicely
+  ;;(setq-default omnisharp-debug t)
+  ;; Use 1.37.3 instead of the latest 1.37.4 because that doesn't work
+  ;; When in doubt, just use the same version the C# VSCode extension is using
+  (setq-default omnisharp-expected-server-version "1.37.3")
+  (setq-default lsp-csharp-server-path "~/.emacs.d/.cache/omnisharp/server/v1.37.3/OmniSharp.exe")
+
+  ;; Optimizations for lsp-mode
+  (setq lsp-enable-symbol-highlighting nil)
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-lens-enable nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-ui-sideline--code-actions nil)
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-modeline-code-actions-enable nil)
+  (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-signature-auto-activate nil)
+  (setq lsp-signature-render-documentation nil)
+  (setq lsp-completion-show-detail nil)
+
+  ;; Disable the constant documentation popups
+  (setq omnisharp-eldoc-support nil)
+
+  ;; Optimize flycheck syntax checking
+  (setq flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
+  (setq flycheck-idle-change-delay 4)
+
+  ;; Automatically start lsp-mode whenever you open a C# file
+  (add-hook 'csharp-mode-hook 'lsp)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -441,7 +462,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files
    '("~/Emacs-Org-Mode/Journal/1-12-2020.org" "~/Emacs-Org-Mode/Journal/4-12-2020.org" "~/Emacs-Org-Mode/Journal/3-12-2020.org" "~/Emacs-Org-Mode/Journal/25-11-2020.org" "~/Emacs-Org-Mode/Journal/5-12-2020.org" "~/Emacs-Org-Mode/Todo/AWoO.org" "~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
  '(package-selected-packages
-   '(lsp-ui lsp-treemacs lsp-origami origami lsp-ivy lsp-mode dash-functional flycheck-pos-tip pos-tip spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(vs-dark-theme spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(tetris-x-colors
    [[229 192 123]
