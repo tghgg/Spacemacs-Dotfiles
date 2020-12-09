@@ -110,7 +110,7 @@ values."
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
 
-   dotspacemacs-mode-line-theme 'vim-powerline
+   dotspacemacs-mode-line-theme 'vanilla
 
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
@@ -218,7 +218,7 @@ values."
    dotspacemacs-helm-use-fuzzy 'always
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-transient-state nil
+   dotspacemacs-enble-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -230,7 +230,7 @@ values."
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar t
+   dotspacemacs-loading-progress-bar nil
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
    dotspacemacs-fullscreen-at-startup t
@@ -339,6 +339,8 @@ you should place your code here."
   ;; Use Olivetti mode for Yarn Spinner dialogue files
   (add-to-list 'auto-mode-alist '("\\.yarn\\'" . olivetti-mode))
 
+  (add-to-list 'auto-mode-alist '("\\.xaml\\'" . nxml-mode))
+
   ;; Open Olivetti mode on opening an Org file
   (add-hook 'org-mode-hook 'olivetti-mode)
 
@@ -358,7 +360,9 @@ you should place your code here."
   (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
   ;; Show line numbers when programming
-  (add-hook 'prog-mode-hook 'spacemacs/toggle-absolute-line-numbers)
+  ;; (add-hook 'prog-mode-hook 'spacemacs/toggle-absolute-line-numbers)
+
+  ;; (add-hook 'nxml-mode-hook 'spacemacs/toggle-absolute-line-numbers)
 
   ;; Word wrap and truncate lines
   (setq-default truncate-lines nil)
@@ -382,7 +386,7 @@ you should place your code here."
   ;;(setq-default omnisharp-debug t)
   ;; Use 1.37.3 instead of the latest 1.37.4 because that doesn't work
   ;; When in doubt, just use the same version the C# VSCode extension is using
-  ;; (setq-default omnisharp-expected-server-version "1.37.3")
+  (setq-default omnisharp-expected-server-version "1.37.3")
   ;; (setq-default lsp-csharp-server-path "~/.emacs.d/.cache/omnisharp/server/v1.37.3/OmniSharp.exe")
 
   ;; Optimizations for lsp-mode
@@ -405,7 +409,7 @@ you should place your code here."
   ;; (setq lsp-log-io nil)
 
   ;; Disable the constant documentation popups
-  ;; (setq omnisharp-eldoc-support nil)
+  (setq omnisharp-eldoc-support nil)
 
   ;; Optimize flycheck syntax checking
   ;; (setq flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
@@ -415,12 +419,12 @@ you should place your code here."
   ;; (add-hook 'csharp-mode-hook 'lsp)
 
   ;; Customize the mode-line
-  (setq spaceline-battery-p nil)
-  (setq spaceline-minor-modes-p nil)
-  (setq spaceline-major-mode-p nil)
-  (setq spaceline-responsive nil)
-  (setq spaceline-point-position-p nil)
-  (setq spaceline-version-control-p nil)
+  ;; (setq spaceline-battery-p nil)
+  ;; (setq spaceline-minor-modes-p nil)
+  ;; (setq spaceline-major-mode-p nil)
+  ;; (setq spaceline-responsive nil)
+  ;; (setq spaceline-point-position-p nil)
+  ;; (setq spaceline-version-control-p nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -448,6 +452,8 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(evil-want-Y-yank-to-eol nil)
@@ -472,7 +478,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files
    '("~/Emacs-Org-Mode/Journal/7-12-2020.org" "~/org/notes.org" "~/Emacs-Org-Mode/Journal/6-12-2020.org" "~/Emacs-Org-Mode/Journal/1-12-2020.org" "~/Emacs-Org-Mode/Journal/4-12-2020.org" "~/Emacs-Org-Mode/Journal/3-12-2020.org" "~/Emacs-Org-Mode/Journal/25-11-2020.org" "~/Emacs-Org-Mode/Journal/5-12-2020.org" "~/Emacs-Org-Mode/Todo/AWoO.org" "~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
  '(package-selected-packages
-   '(omnisharp auto-complete csharp-mode spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(emms spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(tetris-x-colors
    [[229 192 123]
