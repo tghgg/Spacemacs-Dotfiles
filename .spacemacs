@@ -37,7 +37,7 @@ values."
      ;;helm
      ivy
      ;; lsp
-     auto-completion
+     ;; auto-completion
      ;; better-defaults
      emacs-lisp
      git
