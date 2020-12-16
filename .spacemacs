@@ -137,16 +137,16 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         spacemacs-dark
                          vscode-dark-plus
                          atom-one-dark
-                         spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("JetBrains Mono"
-                               :size 14
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1)
@@ -240,7 +240,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -343,6 +343,7 @@ you should place your code here."
 
   ;; Open Olivetti mode on opening an Org file
   (add-hook 'org-mode-hook 'olivetti-mode)
+  (add-hook 'org-mode-hook 'scroll-bar-mode)
 
   ;; The agenda view always start from the current day
   (setq-default org-agenda-start-on-weekday nil)
@@ -418,6 +419,8 @@ you should place your code here."
   ;; Automatically start lsp-mode whenever you open a C# file
   ;; (add-hook 'csharp-mode-hook 'lsp)
 
+  (set-window-scroll-bars (minibuffer-window) nil nil)
+
   ;; Customize the mode-line
   ;; (setq spaceline-battery-p nil)
   ;; (setq spaceline-minor-modes-p nil)
@@ -478,7 +481,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files
    '("~/Emacs-Org-Mode/Journal/7-12-2020.org" "~/org/notes.org" "~/Emacs-Org-Mode/Journal/6-12-2020.org" "~/Emacs-Org-Mode/Journal/1-12-2020.org" "~/Emacs-Org-Mode/Journal/4-12-2020.org" "~/Emacs-Org-Mode/Journal/3-12-2020.org" "~/Emacs-Org-Mode/Journal/25-11-2020.org" "~/Emacs-Org-Mode/Journal/5-12-2020.org" "~/Emacs-Org-Mode/Todo/AWoO.org" "~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
  '(package-selected-packages
-   '(emms spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(gdscript-mode vs-dark-theme yasnippet-snippets ivy-yasnippet fuzzy company-web web-completion-data company auto-yasnippet ac-ispell spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(tetris-x-colors
    [[229 192 123]
