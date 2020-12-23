@@ -5,6 +5,7 @@
 You should not put any user code in this function besides modifying the variable
 values."
   (setq-default
+
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
@@ -42,9 +43,9 @@ values."
      emacs-lisp
      git
      markdown
-     org
+     ;; org
      ranger
-     csharp
+     ;; csharp
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -57,10 +58,8 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                       yasnippet
-                                       org-download
-                                       olivetti
                                        super-save
+                                       gdscript-mode
                                        )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -120,33 +119,30 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists 'nil
    ;; True if the home buffer should respond to resize events.
    ;; dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'org-mode
+   dotspacemacs-scratch-mode 'text-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         spacemacs-dark
-                         vscode-dark-plus
-                         atom-one-dark
-                         spacemacs-light)
+                         naysayer
+                         )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("JetBrains Mono"
-                               :size 16
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1)
@@ -240,7 +236,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -323,55 +319,16 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; Drag-and-Drop images with org-download
-  (add-hook 'dired-mode-hook 'org-download-enable)
-
-  ;; Store org-download images correctly in an dedicated ~images~ folder
-  (setq-default org-download-heading-lvl nil)
-  (setq-default org-download-image-dir "./images/")
-
-  ;; Automatically open Org-Mode when opening .org files
-  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-
-  ;; Add all the files to the agenda list automatically
-  ;; (setq-default org-agenda-files '("~/Emacs-Org-Mode"))
-
-  ;; Use Olivetti mode for Yarn Spinner dialogue files
-  (add-to-list 'auto-mode-alist '("\\.yarn\\'" . olivetti-mode))
-
-  (add-to-list 'auto-mode-alist '("\\.xaml\\'" . nxml-mode))
-
-  ;; Open Olivetti mode on opening an Org file
-  (add-hook 'org-mode-hook 'olivetti-mode)
-  (add-hook 'org-mode-hook 'scroll-bar-mode)
-
-  ;; The agenda view always start from the current day
-  (setq-default org-agenda-start-on-weekday nil)
-
-  ;; The agenda view spans a week from now including the current day
-  (setq-default org-agenda-span 8)
-
-  ;; Deadlines only become active on the day before the deadline to avoid cluttering the agenda
-  (setq-default org-deadline-warning-days 1)
-
   ;; Optimize font-fock-fontify
   (setq font-lock-maximum-decoration 2)
 
   ;; Disable truncate lines when programming
   (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
-  ;; Show line numbers when programming
-  ;; (add-hook 'prog-mode-hook 'spacemacs/toggle-absolute-line-numbers)
-
-  ;; (add-hook 'nxml-mode-hook 'spacemacs/toggle-absolute-line-numbers)
-
   ;; Word wrap and truncate lines
   (setq-default truncate-lines nil)
   (setq-default org-startup-truncated nil)
   (setq-default word-wrap t)
-
-  ;; Don't show inline images
-  (setq org-startup-with-inline-images nil)
 
   ;; Use ranger instead of dired
   (setq-default dotspacemacs-configuration-layers
@@ -379,55 +336,14 @@ you should place your code here."
                          ranger-override-dired 'ranger
                          ranger-show-preview t))
 
-  ;; Autosave
+  ;; Super save
   (super-save-mode +1)
   (setq auto-save-default nil)
 
-  ;; Configure Omnisharp and lsp-mode to work together nicely
-  ;;(setq-default omnisharp-debug t)
-  ;; Use 1.37.3 instead of the latest 1.37.4 because that doesn't work
-  ;; When in doubt, just use the same version the C# VSCode extension is using
-  (setq-default omnisharp-expected-server-version "1.37.3")
-  ;; (setq-default lsp-csharp-server-path "~/.emacs.d/.cache/omnisharp/server/v1.37.3/OmniSharp.exe")
-
-  ;; Optimizations for lsp-mode
-  ;; (setq lsp-completion-provider :none)
-  ;; (setq lsp-diagnostics-provider :none)
-  ;; (setq lsp-enable-symbol-highlighting nil)
-  ;; (setq lsp-ui-doc-enable nil)
-  ;; (setq lsp-lens-enable nil)
-  ;; (setq lsp-headerline-breadcrumb-enable nil)
-  ;; (setq lsp-ui-sideline--code-actions nil)
-  ;; (setq lsp-ui-sideline-enable nil)
-  ;; (setq lsp-modeline-code-actions-enable nil)
-  ;; (setq lsp-eldoc-enable-hover nil)
-  ;; (setq lsp-signature-auto-activate nil)
-  ;; (setq lsp-signature-render-documentation nil)
-  ;; (setq lsp-completion-show-detail nil)
-  ;; Disable file-watch for lsp-mode
-  ;; (setq lsp-enable-file-watchers nil)
-  ;; Disable lsp-mode logging
-  ;; (setq lsp-log-io nil)
-
-  ;; Disable the constant documentation popups
-  (setq omnisharp-eldoc-support nil)
-
-  ;; Optimize flycheck syntax checking
-  ;; (setq flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
-  ;; (setq flycheck-idle-change-delay 4)
-
-  ;; Automatically start lsp-mode whenever you open a C# file
-  ;; (add-hook 'csharp-mode-hook 'lsp)
-
+  ;; Use the scroll bar
+  (scroll-bar-mode -1)
+  (set-scroll-bar-mode 'right)
   (set-window-scroll-bars (minibuffer-window) nil nil)
-
-  ;; Customize the mode-line
-  ;; (setq spaceline-battery-p nil)
-  ;; (setq spaceline-minor-modes-p nil)
-  ;; (setq spaceline-major-mode-p nil)
-  ;; (setq spaceline-responsive nil)
-  ;; (setq spaceline-point-position-p nil)
-  ;; (setq spaceline-version-control-p nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -481,7 +397,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files
    '("~/Emacs-Org-Mode/Journal/7-12-2020.org" "~/org/notes.org" "~/Emacs-Org-Mode/Journal/6-12-2020.org" "~/Emacs-Org-Mode/Journal/1-12-2020.org" "~/Emacs-Org-Mode/Journal/4-12-2020.org" "~/Emacs-Org-Mode/Journal/3-12-2020.org" "~/Emacs-Org-Mode/Journal/25-11-2020.org" "~/Emacs-Org-Mode/Journal/5-12-2020.org" "~/Emacs-Org-Mode/Todo/AWoO.org" "~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
  '(package-selected-packages
-   '(gdscript-mode vs-dark-theme yasnippet-snippets ivy-yasnippet fuzzy company-web web-completion-data company auto-yasnippet ac-ispell spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(gdscript-mode spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
  '(tetris-x-colors
    [[229 192 123]
