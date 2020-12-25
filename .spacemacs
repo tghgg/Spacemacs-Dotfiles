@@ -37,7 +37,7 @@ values."
      ;; ----------------------------------------------------------------
      ;;helm
      ivy
-     ;; lsp
+     lsp
      ;; auto-completion
      ;; better-defaults
      emacs-lisp
@@ -109,6 +109,7 @@ values."
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
 
+   ;; Use the default Emacs mode-line since it's boring and non-distracting
    dotspacemacs-mode-line-theme 'vanilla
 
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
@@ -325,16 +326,43 @@ you should place your code here."
   ;; Disable truncate lines when programming
   (add-hook 'prog-mode-hook 'toggle-truncate-lines)
 
-  ;; Word wrap and truncate lines
-  (setq-default truncate-lines nil)
-  (setq-default org-startup-truncated nil)
-  (setq-default word-wrap t)
-
   ;; Use ranger instead of dired
   (setq-default dotspacemacs-configuration-layers
                 '(ranger :variables
                          ranger-override-dired 'ranger
                          ranger-show-preview t))
+
+  ;; Open lsp-mode when programming
+  (add-hook 'prog-mode-hook 'lsp)
+
+  ;; Optimizations for lsp-mode
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-lens-enable nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-ui-sideline--code-actions nil)
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-modeline-code-actions-enable nil)
+  (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-signature-auto-activate nil)
+  (setq lsp-signature-render-documentation nil)
+  (setq lsp-completion-show-detail nil)
+  ;; Disable file-watch for lsp-mode
+  (setq lsp-enable-file-watchers nil)
+  ;; Disable lsp-mode logging
+  (setq lsp-log-io nil)
+
+  (defun lsp--gdscript-ignore-errors (original-function &rest args)
+    "Ignore the error message resulting from Godot not replying to the `JSONRPC' request."
+    (if (string-equal major-mode "gdscript-mode")
+        (let ((json-data (nth 0 args)))
+          (if (and (string= (gethash "jsonrpc" json-data "") "2.0")
+                   (not (gethash "id" json-data nil))
+                   (not (gethash "method" json-data nil)))
+              nil ; (message "Method not found")
+            (apply original-function args)))
+      (apply original-function args)))
+  ;; Runs the function `lsp--gdscript-ignore-errors` around `lsp--get-message-type` to suppress unknown notification errors.
+  (advice-add #'lsp--get-message-type :around #'lsp--gdscript-ignore-errors)
 
   ;; Super save
   (super-save-mode +1)
@@ -343,7 +371,7 @@ you should place your code here."
   ;; Use the scroll bar
   (scroll-bar-mode -1)
   (set-scroll-bar-mode 'right)
-  (set-window-scroll-bars (minibuffer-window) nil nil)
+  (set-window-scroll-bars (minibuffer-window) nil nil) ;; Don't show the scroll-bar in the minibuffer
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -366,51 +394,51 @@ you should place your code here."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
- '(evil-want-Y-yank-to-eol nil)
- '(fci-rule-color "#3E4451")
- '(highlight-indent-guides-method 'character)
- '(hl-todo-keyword-faces
-   '(("TODO" . "#dc752f")
-     ("NEXT" . "#dc752f")
-     ("THEM" . "#2d9574")
-     ("PROG" . "#4f97d7")
-     ("OKAY" . "#4f97d7")
-     ("DONT" . "#f2241f")
-     ("FAIL" . "#f2241f")
-     ("DONE" . "#86dc2f")
-     ("NOTE" . "#b1951d")
-     ("KLUDGE" . "#b1951d")
-     ("HACK" . "#b1951d")
-     ("TEMP" . "#b1951d")
-     ("FIXME" . "#dc752f")
-     ("XXX+" . "#dc752f")
-     ("\\?\\?\\?+" . "#dc752f")))
- '(org-agenda-files
-   '("~/Emacs-Org-Mode/Journal/7-12-2020.org" "~/org/notes.org" "~/Emacs-Org-Mode/Journal/6-12-2020.org" "~/Emacs-Org-Mode/Journal/1-12-2020.org" "~/Emacs-Org-Mode/Journal/4-12-2020.org" "~/Emacs-Org-Mode/Journal/3-12-2020.org" "~/Emacs-Org-Mode/Journal/25-11-2020.org" "~/Emacs-Org-Mode/Journal/5-12-2020.org" "~/Emacs-Org-Mode/Todo/AWoO.org" "~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
- '(package-selected-packages
-   '(gdscript-mode spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
- '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
- '(tetris-x-colors
-   [[229 192 123]
-    [97 175 239]
-    [209 154 102]
-    [224 108 117]
-    [152 195 121]
-    [198 120 221]
-    [86 182 194]]))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(ansi-color-faces-vector
+     [default default default italic underline success warning error])
+   '(ansi-color-names-vector
+     ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+   '(evil-want-Y-yank-to-eol nil)
+   '(fci-rule-color "#3E4451")
+   '(highlight-indent-guides-method 'character)
+   '(hl-todo-keyword-faces
+     '(("TODO" . "#dc752f")
+       ("NEXT" . "#dc752f")
+       ("THEM" . "#2d9574")
+       ("PROG" . "#4f97d7")
+       ("OKAY" . "#4f97d7")
+       ("DONT" . "#f2241f")
+       ("FAIL" . "#f2241f")
+       ("DONE" . "#86dc2f")
+       ("NOTE" . "#b1951d")
+       ("KLUDGE" . "#b1951d")
+       ("HACK" . "#b1951d")
+       ("TEMP" . "#b1951d")
+       ("FIXME" . "#dc752f")
+       ("XXX+" . "#dc752f")
+       ("\\?\\?\\?+" . "#dc752f")))
+   '(org-agenda-files
+     '("~/Emacs-Org-Mode/Journal/7-12-2020.org" "~/org/notes.org" "~/Emacs-Org-Mode/Journal/6-12-2020.org" "~/Emacs-Org-Mode/Journal/1-12-2020.org" "~/Emacs-Org-Mode/Journal/4-12-2020.org" "~/Emacs-Org-Mode/Journal/3-12-2020.org" "~/Emacs-Org-Mode/Journal/25-11-2020.org" "~/Emacs-Org-Mode/Journal/5-12-2020.org" "~/Emacs-Org-Mode/Todo/AWoO.org" "~/Emacs-Org-Mode/Todo/VoidLetters.org" "~/Emacs-Org-Mode/Todo/StuffToLearn.org" "~/Emacs-Org-Mode/Todo/ReadingList.org" "~/Emacs-Org-Mode/Todo/Events.org" "~/Emacs-Org-Mode/Todo/GamingBacklog.org" "~/Emacs-Org-Mode/Todo/Life.org" "~/Emacs-Org-Mode/Todo/NAAN.org"))
+   '(package-selected-packages
+     '(yasnippet-snippets lsp-ui lsp-treemacs lsp-origami origami lsp-ivy lsp-mode dash-functional ivy-yasnippet fuzzy flycheck-pos-tip pos-tip company-web web-completion-data company auto-yasnippet yasnippet ac-ispell auto-complete spaceline paradox hydra highlight-numbers helm-projectile projectile flx-ido evil-search-highlight-persist evil-lisp-state ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org powerline restart-emacs request rainbow-delimiters pkg-info popwin persp-mode pcre2el spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide lv hungry-delete hl-todo highlight-parentheses parent-mode highlight-indentation helm-themes helm-swoop epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(pdf-view-midnight-colors '("#b2b2b2" . "#292b2e"))
+   '(tetris-x-colors
+     [[229 192 123]
+      [97 175 239]
+      [209 154 102]
+      [224 108 117]
+      [152 195 121]
+      [198 120 221]
+      [86 182 194]]))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   )
+  )
