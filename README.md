@@ -10,7 +10,7 @@ Notable stuff in here:
 * Ditch the distracting Spacemacs `mode-line` for the vanilla Emacs one.
 * JetBrains Mono as the default font.
 * `org-download` to easily drag and drop images into Spacemacs
-* Naysayer (Jonathan Blow's theme) as the default theme.
+* `naysayer` (Jonathan Blow's theme) as the default theme.
 * The option to use `ranger` as a file manager.
 * `lsp-mode` with the GDScript language server.
 * Better autosaving with `super-save`.
