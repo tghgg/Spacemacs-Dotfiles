@@ -43,7 +43,7 @@ values."
      emacs-lisp
      git
      markdown
-     ;; org
+     org
      ranger
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -320,6 +320,9 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; Use treemacs by default
+  (treemacs)
+
   ;; Drag-and-Drop images with org-download
   (add-hook 'dired-mode-hook 'org-download-enable)
 
@@ -329,6 +332,11 @@ you should place your code here."
 
   ;; Automatically open Org-Mode when opening .org files
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+
+  ;; Word wrap and truncate lines
+  (setq-default truncate-lines nil)
+  (setq-default org-startup-truncated nil)
+  (setq-default word-wrap t)
 
   ;; Don't show inline images
   (setq org-startup-with-inline-images nil)
